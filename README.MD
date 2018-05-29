@@ -2,6 +2,12 @@
 
 Inserir descrição
 
+
+## Dependendências ##
+
+ - [Codeignaiter 3.1.8](https://github.com/bcit-ci/CodeIgniter)
+ - [Codeignaiter Rest Server](https://github.com/chriskacerguis/codeigniter-restserver) - Instalado via composer
+
 ## Instalação ##
 
 Para instalar o portal basta descompactar o projeto no servidor.
