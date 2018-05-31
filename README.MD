@@ -2,11 +2,12 @@
 
 Inserir descrição
 
+O projeto foi escrito com base no framework  [Codeignaiter 3.1.8](https://github.com/bcit-ci/CodeIgniter)
 
 ## Dependendências ##
 
- - [Codeignaiter 3.1.8](https://github.com/bcit-ci/CodeIgniter)
- - [Codeignaiter Rest Server](https://github.com/chriskacerguis/codeigniter-restserver) - Instalado via composer
+ - [Firebase/JWt](https://github.com/firebase/php-jwt)
+ - [Codeignaiter Rest Server](https://github.com/chriskacerguis/codeigniter-restserver)
 
 ## Instalação ##
 
