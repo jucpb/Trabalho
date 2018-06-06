@@ -44,6 +44,12 @@ class Cliente extends MY_Controller {
         $this->form_validation->set_rules('nom_cliente', 'nom_cliente', 'required');
         $this->form_validation->set_rules('cpf', 'cpf', 'required|exact_length[11]|numeric');
         $this->form_validation->set_rules('email', 'email', 'required|valid_email');
+        $this->form_validation->set_rules('logradouro', 'logradouro', 'required');
+        $this->form_validation->set_rules('bairro', 'bairro', 'required');
+        $this->form_validation->set_rules('cidade', 'cidade', 'required');
+        $this->form_validation->set_rules('sexo', 'sexo', 'required|in_list[Masculino,Feminino]');
+        $this->form_validation->set_rules('tel_cliente', 'tel_cliente', 'required|numeric|min_length[10]|max_length[11]');
+
         $this->form_validation->set_data($this->post(NULL,TRUE));
 
         if ($this->form_validation->run() == FALSE)
@@ -60,6 +66,12 @@ class Cliente extends MY_Controller {
             'cpf' => $this->post('cpf',true),
             'nom_cliente' => $this->post('nom_cliente',true),
             'email' => $this->post('email',true),
+            'logradouro' => $this ->post('logradouro',true),
+            'bairro' => $this ->post('bairro',true),
+            'regional' => $this ->post('regional',true),
+            'cidade' => $this ->post('cidade',true),
+            'sexo' => $this->post('sexo',true),
+            'tel_cliente' => $this ->post('tel_cliente',true),
         ];
         
         $insert = $this->cliente_model->cadastrarCliente($dados);
