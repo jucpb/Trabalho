@@ -12,6 +12,7 @@ class parceiro_model extends CI_Model {
         return $query->row();
     }
 
+
     function getParceiros(){
         $this->db->select();
         $this->db->from('parceiro');

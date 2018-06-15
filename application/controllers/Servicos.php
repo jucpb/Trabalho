@@ -42,8 +42,9 @@ class Servicos extends MY_Controller {
     {
         
         $this->form_validation->set_rules('desc_servico', 'desc_servico', 'required');
-        $this->form_validation->set_rules('valor_servico', 'valor_servico', 'required|numeric');
-        
+        $this->form_validation->set_rules('valor_servico', 'valor_servico', 'numeric');
+        $this->form_validation->set_rules('status_servico', 'status_servico', 'required|in_list[Aberto,Em andamento, Concluido]');
+
         $this->form_validation->set_data($this->post(NULL,TRUE));
 
         if ($this->form_validation->run() == FALSE)
@@ -59,6 +60,7 @@ class Servicos extends MY_Controller {
         $dados = [
             'desc_servico' => $this->post('desc_servico',true),
             'valor_servico' => $this->post('valor_servico',true),
+            'status_servico' => $this->post('status_servico',true),
         ];
         
         $insert = $this->servicos_model->cadastrarServico($dados);
@@ -92,8 +94,26 @@ class Servicos extends MY_Controller {
         $this->response($dados);
     }
 
-    public function index_patch()
+
+    public function atualizar_post()
     {
+
+
+        $this->form_validation->set_rules('parceiro', 'parceiro', 'callback_existeParceiro', [
+            'existeParceiro' => "Parceiro inválido"
+        ] );
+
+        $this->form_validation->set_data($this->post(NULL,TRUE));
+
+        if ($this->form_validation->run() == FALSE)
+        {                    
+                $dados = array(
+                    'status'=>FALSE,
+                    'erro' => $this->form_validation->error_array()
+                );
+                $this->response($dados,REST_Controller::HTTP_BAD_REQUEST);
+            }
+
         $dados = [
             'status' => true,
             'mensagem' => 'Serviço atualizado com sucesso'
@@ -101,6 +121,28 @@ class Servicos extends MY_Controller {
         $this->response($dados);
     }
 
+    public function cliente_get($id = null) 
+    {
+        $servicos = $this->servicos_model->getServicosCliente($id);
+        $this->response($servicos);
 
+    }
 
+    public function parceiro_get($id = null) 
+    {
+        $servicos = $this->servicos_model->getServicosCliente($id);
+        $this->response($servicos);
+
+    }
+
+    public function existeParceiro($id) {
+
+        if (is_null($id)){
+            return true;
+        }
+
+        $this->load->model('parceiro_model');
+        $parceiro = $this->parceiro_model->getParceiro($id);
+        return $parceiro ? true:false;
+    }
 }

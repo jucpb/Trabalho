@@ -5,8 +5,12 @@ class servicos_model extends CI_Model {
 
     function getServico($id) {
 
-        $this->db->select();
-        $this->db->from('servicos');
+        $this->db->select('c.nom_cliente as nome,
+                           c.email as emailCliente,
+                           s.*,p.*');
+        $this->db->from('servicos s');
+        $this->db->join('cliente c', 's.cliente_fk = c.cod_cliente');
+        $this->db->join('parceiro p', 's.parceiro_fk = p.cod_parceiro', 'left');
         $this->db->where('cod_servico', $id, true);
         $query = $this->db->get();
         return $query->row();
@@ -26,4 +30,14 @@ class servicos_model extends CI_Model {
         }
         return false;
     }
+
+    function getServicosCliente($id)
+    {
+        $this->db->select();
+        $this->db->from('servicos');
+        $this->db->where('cliente_fk',$id, true);
+        $query = $this->db->get();
+        return $query->result();
+    } 
+
 }
