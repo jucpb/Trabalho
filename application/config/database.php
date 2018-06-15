@@ -74,12 +74,12 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'trabalho',
-	'dbdriver' => 'mysqli',
+	'dsn'	=> getenv('API-DSN'),
+	'hostname' => '',
+	'username' => getenv('API-USER'),
+	'password' => getenv('API-PASS'),
+	'database' => '',
+	'dbdriver' => 'pdo',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),

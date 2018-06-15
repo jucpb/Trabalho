@@ -2,14 +2,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Cliente extends MY_Controller {
+class Parceiro extends MY_Controller {
     
 
 
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('cliente_model');
+        $this->load->model('parceiro_model');
     }
     /**
      * Undocumented function
@@ -21,18 +21,18 @@ class Cliente extends MY_Controller {
     {
 
         if ($id) {
-            $cliente = $this->cliente_model->getCliente($id);
+            $parceiro = $this->parceiro_model->getParceiro($id);
         } else {
-            $cliente = $this->cliente_model->getClientes();
+            $parceiro = $this->parceiro_model->getParceiros();
         }
         
 
-        if ($cliente) {
-            $this->response($cliente);
+        if ($parceiro) {
+            $this->response($parceiro);
         } else {
             $resposta = [
                 'status' => false,
-                'mensagem' => 'Cliente não encontrado'
+                'mensagem' => 'Parceiro não encontrado'
             ];
             $this->response($resposta, REST_Controller::HTTP_NOT_FOUND);
         }
@@ -41,14 +41,13 @@ class Cliente extends MY_Controller {
     public function index_post()
     {
         
-        $this->form_validation->set_rules('nom_cliente', 'nom_cliente', 'required');
-        $this->form_validation->set_rules('cpf', 'cpf', 'required|exact_length[11]|numeric');
-        $this->form_validation->set_rules('email', 'email', 'required|valid_email');
+        $this->form_validation->set_rules('nom_parceiro', 'nom_parceiro', 'required');
+        $this->form_validation->set_rules('cnpj', 'cnpj', 'required|exact_length[14]|numeric');
+        $this->form_validation->set_rules('email_parceiro', 'email_parceiro', 'required|valid_email');
         $this->form_validation->set_rules('logradouro', 'logradouro', 'required');
         $this->form_validation->set_rules('bairro', 'bairro', 'required');
         $this->form_validation->set_rules('cidade', 'cidade', 'required');
-        $this->form_validation->set_rules('sexo', 'sexo', 'required|in_list[Masculino,Feminino]');
-        $this->form_validation->set_rules('tel_cliente', 'tel_cliente', 'required|numeric|min_length[10]|max_length[11]');
+        $this->form_validation->set_rules('tel_parceiro', 'tel_parceiro', 'required|numeric|min_length[10]|max_length[11]');
 
         $this->form_validation->set_data($this->post(NULL,TRUE));
 
@@ -63,24 +62,23 @@ class Cliente extends MY_Controller {
 
 
         $dados = [
-            'cpf' => $this->post('cpf',true),
-            'nom_cliente' => $this->post('nom_cliente',true),
-            'email' => $this->post('email',true),
+            'cnpj' => $this->post('cnpj',true),
+            'nom_parceiro' => $this->post('nom_parceiro',true),
+            'email_parceiro' => $this->post('email_parceiro',true),
             'logradouro' => $this ->post('logradouro',true),
             'bairro' => $this ->post('bairro',true),
             'regional' => $this ->post('regional',true),
             'cidade' => $this ->post('cidade',true),
-            'sexo' => $this->post('sexo',true),
-            'tel_cliente' => $this ->post('tel_cliente',true),
+            'tel_parceiro' => $this ->post('tel_parceiro',true),
         ];
         
-        $insert = $this->cliente_model->cadastrarCliente($dados);
+        $insert = $this->parceiro_model->cadastrarParceiro($dados);
 
         if ($insert) {
 
             $resposta = [
                 'status' => true,
-                'mensagem' => 'Cliente cadastrado com sucesso',
+                'mensagem' => 'Parceiro cadastrado com sucesso',
                 'id' => $insert
             ];
             $this->response($resposta,REST_Controller::HTTP_CREATED);
@@ -88,7 +86,7 @@ class Cliente extends MY_Controller {
         else {
             $resposta = [
                 'status' => false,
-                'mensagem' => 'Erro ao inserir o cliente'
+                'mensagem' => 'Erro ao inserir o parceiro'
             ];
             $this->response($resposta, REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -99,7 +97,7 @@ class Cliente extends MY_Controller {
     {
         $dados = [
             'status' => true,
-            'mensagem' => 'Cliente removido com sucesso'
+            'mensagem' => 'Parceiro removido com sucesso'
         ];
 
         $this->response($dados);
@@ -109,7 +107,7 @@ class Cliente extends MY_Controller {
     {
         $dados = [
             'status' => true,
-            'mensagem' => 'Cliente atualizado com sucesso'
+            'mensagem' => 'Parceiro atualizado com sucesso'
         ];
         $this->response($dados);
     }
