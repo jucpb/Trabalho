@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class servicos_model extends CI_Model {
+class Servicos_model extends CI_Model {
 
     function getServico($id) {
 

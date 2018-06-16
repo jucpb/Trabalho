@@ -1,27 +1,28 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class cliente_model extends CI_Model {
+class Parceiro_model extends CI_Model {
 
-    function getCliente($id) {
+    function getParceiro($id) {
 
         $this->db->select();
-        $this->db->from('cliente');
-        $this->db->where('cod_cliente', $id, true);
+        $this->db->from('parceiro');
+        $this->db->where('cod_parceiro', $id, true);
         $query = $this->db->get();
         return $query->row();
     }
 
-    function getClientes(){
+
+    function getParceiros(){
         $this->db->select();
-        $this->db->from('cliente');
+        $this->db->from('parceiro');
         $query = $this->db->get();
         return $query->result();
     }
 
-    function cadastrarCliente($dados) {
+    function cadastrarParceiro($dados) {
 
-        if($this->db->insert('cliente',$dados)){
+        if($this->db->insert('parceiro',$dados)){
             return $this->db->insert_id();
         }
         return false;
